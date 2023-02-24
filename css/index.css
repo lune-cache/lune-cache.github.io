@@ -1368,7 +1368,7 @@ canvas:not(#ribbon-canvas),
   --toc-link-color: #666261;
   --card-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);
   --card-hover-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.09);
-  --pseudo-hover: #ff7242;
+  --pseudo-hover: #fff;
   --headline-presudo: #a0a0a0;
   --scrollbar-color: #49b1f5;
   --default-bg-color: #49b1f5;

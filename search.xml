@@ -83,17 +83,6 @@
     
     
     <entry>
-      <title>link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
       <link href="/css/universe.css"/>
       <url>/css/universe.css</url>
@@ -106,10 +95,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/lune.js"/>
-      <url>/js/lune.js</url>
+      <link href="/js/light.js"/>
+      <url>/js/light.js</url>
       
-        <content type="html"><![CDATA[var navMusicEl = document.getElementById("nav-music");var lune = {    //切换音乐播放状态    musicToggle: function (changePaly = true) {        if (!lune_musicFirst) {            musicBindEvent();            lune_musicFirst = true;        }        let msgPlay = '<i class="fa-solid fa-play"></i><span>播放音乐</span>'; // 此處可以更改為你想要顯示的文字        let msgPause = '<i class="fa-solid fa-pause"></i><span>暂停音乐</span>'; // 同上，但兩處均不建議更改        if (lune_musicPlaying) {            navMusicEl.classList.remove("playing");            // 修改右键菜单文案为播放            // document.getElementById("menu-music-toggle").innerHTML = msgPlay;            document.getElementById("nav-music-hoverTips").innerHTML = "音乐已暂停";            // document.querySelector("#consoleMusic").classList.remove("on");            lune_musicPlaying = false;            navMusicEl.classList.remove("stretch");        } else {            navMusicEl.classList.add("playing");            // 修改右键菜单文案为暂停            // document.getElementById("menu-music-toggle").innerHTML = msgPause;            // document.querySelector("#consoleMusic").classList.add("on");            lune_musicPlaying = true;            navMusicEl.classList.add("stretch");        }        if (changePaly) document.querySelector("#nav-music meting-js").aplayer.toggle();    },    // 音乐伸缩    musicTelescopic: function () {        if (navMusicEl.classList.contains("stretch")) {            navMusicEl.classList.remove("stretch");        } else {            navMusicEl.classList.add("stretch");        }    },    //音乐上一曲    musicSkipBack: function () {        document.querySelector("#nav-music meting-js").aplayer.skipBack();    },    //音乐下一曲    musicSkipForward: function () {        document.querySelector("#nav-music meting-js").aplayer.skipForward();    },    //获取音乐中的名称    musicGetName: function () {        var x = $(".aplayer-title");        var arr = [];        for (var i = x.length - 1; i >= 0; i--) {            arr[i] = x[i].innerText;        }        return arr[0];    },};// 如果有右键事件 可以在这里写。// addRightMenuClickEvent();]]></content>
+        <content type="html"><![CDATA[// 霓虹灯效果// 颜色数组var arr = ["#f1ee47", "#ffffff"];// 颜色索引var idx = 0;// 切换颜色function changeColor() {    // 仅夜间模式才启用    if (document.getElementsByTagName('html')[0].getAttribute('data-theme') == 'dark') {        if (document.getElementById("site-name"))            document.getElementById("site-name").style.textShadow = arr[idx] + " 0 0 15px";        if (document.getElementById("site-title"))            document.getElementById("site-title").style.textShadow = arr[idx] + " 0 0 15px";        if (document.getElementById("site-subtitle"))            document.getElementById("site-subtitle").style.textShadow = arr[idx] + " 0 0 10px";        if (document.getElementById("post-info"))            document.getElementById("post-info").style.textShadow = arr[idx] + " 0 0 5px";        try {            document.getElementsByClassName("author-info__name")[0].style.textShadow = arr[idx] + " 0 0 12px";            document.getElementsByClassName("author-info__description")[0].style.textShadow = arr[idx] + " 0 0 12px";        } catch {        }        idx++;        if (idx == 2) {            idx = 0;        }    } else {        // 白天模式恢复默认        if (document.getElementById("site-name"))            document.getElementById("site-name").style.textShadow = "#1e1e1ee0 1px 1px 1px";        if (document.getElementById("site-title"))            document.getElementById("site-title").style.textShadow = "#1e1e1ee0 1px 1px 1px";        if (document.getElementById("site-subtitle"))            document.getElementById("site-subtitle").style.textShadow = "#1e1e1ee0 1px 1px 1px";        if (document.getElementById("post-info"))            document.getElementById("post-info").style.textShadow = "#1e1e1ee0 1px 1px 1px";        try {            document.getElementsByClassName("author-info__name")[0].style.textShadow = "";            document.getElementsByClassName("author-info__description")[0].style.textShadow = "";        } catch {        }    }}// 开启计时器window.onload = setInterval(changeColor, 1200);]]></content>
       
     </entry>
     
@@ -117,10 +106,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/light.js"/>
-      <url>/js/light.js</url>
+      <link href="/js/lune.js"/>
+      <url>/js/lune.js</url>
       
-        <content type="html"><![CDATA[// 霓虹灯效果// 颜色数组var arr = ["#f1ee47", "#ffffff"];// 颜色索引var idx = 0;// 切换颜色function changeColor() {    // 仅夜间模式才启用    if (document.getElementsByTagName('html')[0].getAttribute('data-theme') == 'dark') {        if (document.getElementById("site-name"))            document.getElementById("site-name").style.textShadow = arr[idx] + " 0 0 15px";        if (document.getElementById("site-title"))            document.getElementById("site-title").style.textShadow = arr[idx] + " 0 0 15px";        if (document.getElementById("site-subtitle"))            document.getElementById("site-subtitle").style.textShadow = arr[idx] + " 0 0 10px";        if (document.getElementById("post-info"))            document.getElementById("post-info").style.textShadow = arr[idx] + " 0 0 5px";        try {            document.getElementsByClassName("author-info__name")[0].style.textShadow = arr[idx] + " 0 0 12px";            document.getElementsByClassName("author-info__description")[0].style.textShadow = arr[idx] + " 0 0 12px";        } catch {        }        idx++;        if (idx == 2) {            idx = 0;        }    } else {        // 白天模式恢复默认        if (document.getElementById("site-name"))            document.getElementById("site-name").style.textShadow = "#1e1e1ee0 1px 1px 1px";        if (document.getElementById("site-title"))            document.getElementById("site-title").style.textShadow = "#1e1e1ee0 1px 1px 1px";        if (document.getElementById("site-subtitle"))            document.getElementById("site-subtitle").style.textShadow = "#1e1e1ee0 1px 1px 1px";        if (document.getElementById("post-info"))            document.getElementById("post-info").style.textShadow = "#1e1e1ee0 1px 1px 1px";        try {            document.getElementsByClassName("author-info__name")[0].style.textShadow = "";            document.getElementsByClassName("author-info__description")[0].style.textShadow = "";        } catch {        }    }}// 开启计时器window.onload = setInterval(changeColor, 1200);]]></content>
+        <content type="html"><![CDATA[var navMusicEl = document.getElementById("nav-music");var lune = {    //切换音乐播放状态    musicToggle: function (changePaly = true) {        if (!lune_musicFirst) {            musicBindEvent();            lune_musicFirst = true;        }        let msgPlay = '<i class="fa-solid fa-play"></i><span>播放音乐</span>'; // 此處可以更改為你想要顯示的文字        let msgPause = '<i class="fa-solid fa-pause"></i><span>暂停音乐</span>'; // 同上，但兩處均不建議更改        if (lune_musicPlaying) {            navMusicEl.classList.remove("playing");            // 修改右键菜单文案为播放            // document.getElementById("menu-music-toggle").innerHTML = msgPlay;            document.getElementById("nav-music-hoverTips").innerHTML = "音乐已暂停";            // document.querySelector("#consoleMusic").classList.remove("on");            lune_musicPlaying = false;            navMusicEl.classList.remove("stretch");        } else {            navMusicEl.classList.add("playing");            // 修改右键菜单文案为暂停            // document.getElementById("menu-music-toggle").innerHTML = msgPause;            // document.querySelector("#consoleMusic").classList.add("on");            lune_musicPlaying = true;            navMusicEl.classList.add("stretch");        }        if (changePaly) document.querySelector("#nav-music meting-js").aplayer.toggle();    },    // 音乐伸缩    musicTelescopic: function () {        if (navMusicEl.classList.contains("stretch")) {            navMusicEl.classList.remove("stretch");        } else {            navMusicEl.classList.add("stretch");        }    },    //音乐上一曲    musicSkipBack: function () {        document.querySelector("#nav-music meting-js").aplayer.skipBack();    },    //音乐下一曲    musicSkipForward: function () {        document.querySelector("#nav-music meting-js").aplayer.skipForward();    },    //获取音乐中的名称    musicGetName: function () {        var x = $(".aplayer-title");        var arr = [];        for (var i = x.length - 1; i >= 0; i--) {            arr[i] = x[i].innerText;        }        return arr[0];    },};// 如果有右键事件 可以在这里写。// addRightMenuClickEvent();]]></content>
       
     </entry>
     
@@ -150,10 +139,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/title.js"/>
-      <url>/js/title.js</url>
+      <link href="/js/sun_moon.js"/>
+      <url>/js/sun_moon.js</url>
       
-        <content type="html"><![CDATA[//动态标题var OriginTitile = document.title;var titleTime;document.addEventListener('visibilitychange', function () {    if (document.hidden) {        //离开当前页面时标签显示内容        document.title = '🌘 folding...';        clearTimeout(titleTime);    } else {        //返回当前页面时标签显示内容        document.title = '🌕 welcome :)';        //两秒后变回正常标题        titleTime = setTimeout(function () {            document.title = OriginTitile;        }, 2000);    }});]]></content>
+        <content type="html"><![CDATA[function switchNightMode() {    document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>'),        setTimeout(function() {            document.querySelector('body').classList.contains('DarkMode') ? (document.querySelector('body').classList.remove('DarkMode'), localStorage.setItem('isDark', '0'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')) : (document.querySelector('body').classList.add('DarkMode'), localStorage.setItem('isDark', '1'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')),                setTimeout(function() {                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.transition = 'opacity 3s';                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.opacity = '0';                    setTimeout(function() {                        document.getElementsByClassName('Cuteen_DarkSky')[0].remove();                    }, 1e3);                }, 2e3)        })    const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'    if (nowMode === 'light') {        activateDarkMode()        saveToLocal.set('theme', 'dark', 2)        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)        document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')    } else {        activateLightMode()        saveToLocal.set('theme', 'light', 2)        document.querySelector('body').classList.add('DarkMode'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')    }    // handle some cases    typeof utterancesTheme === 'function' && utterancesTheme()    typeof FB === 'object' && window.loadFBComment()    window.DISQUS && document.getElementById('disqus_thread').children.length && setTimeout(() => window.disqusReset(), 200)}]]></content>
       
     </entry>
     
@@ -161,10 +150,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/sun_moon.js"/>
-      <url>/js/sun_moon.js</url>
+      <link href="/js/title.js"/>
+      <url>/js/title.js</url>
       
-        <content type="html"><![CDATA[function switchNightMode() {    document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>'),        setTimeout(function() {            document.querySelector('body').classList.contains('DarkMode') ? (document.querySelector('body').classList.remove('DarkMode'), localStorage.setItem('isDark', '0'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')) : (document.querySelector('body').classList.add('DarkMode'), localStorage.setItem('isDark', '1'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')),                setTimeout(function() {                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.transition = 'opacity 3s';                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.opacity = '0';                    setTimeout(function() {                        document.getElementsByClassName('Cuteen_DarkSky')[0].remove();                    }, 1e3);                }, 2e3)        })    const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'    if (nowMode === 'light') {        activateDarkMode()        saveToLocal.set('theme', 'dark', 2)        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)        document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')    } else {        activateLightMode()        saveToLocal.set('theme', 'light', 2)        document.querySelector('body').classList.add('DarkMode'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')    }    // handle some cases    typeof utterancesTheme === 'function' && utterancesTheme()    typeof FB === 'object' && window.loadFBComment()    window.DISQUS && document.getElementById('disqus_thread').children.length && setTimeout(() => window.disqusReset(), 200)}]]></content>
+        <content type="html"><![CDATA[//动态标题var OriginTitile = document.title;var titleTime;document.addEventListener('visibilitychange', function () {    if (document.hidden) {        //离开当前页面时标签显示内容        document.title = '🌘 folding...';        clearTimeout(titleTime);    } else {        //返回当前页面时标签显示内容        document.title = '🌕 welcome :)';        //两秒后变回正常标题        titleTime = setTimeout(function () {            document.title = OriginTitile;        }, 2000);    }});]]></content>
       
     </entry>
     
@@ -182,9 +171,31 @@
     
     
     <entry>
+      <title>link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>movie</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -198,17 +209,6 @@
       <url>/music/index.html</url>
       
         <content type="html"><![CDATA[<div id="aplayer-oSEOhviA" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="8164623418" data-server="netease" data-type="playlist" data-mode="random" data-autoplay="false" data-listmaxheight="340px" data-preload="auto" data-theme="#e3f2f5" data-volume="0.4" mutex="true"></div>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
       
     </entry>
     

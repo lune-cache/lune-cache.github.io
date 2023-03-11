@@ -4,6 +4,63 @@
   
     
     <entry>
+      <title>SQL</title>
+      <link href="/2023/03/09/2023-3-9-SQL/"/>
+      <url>/2023/03/09/2023-3-9-SQL/</url>
+      
+        <content type="html"><![CDATA[<h3 id="基础知识-amp-术语"><a href="#基础知识-amp-术语" class="headerlink" title="基础知识&amp;术语"></a>基础知识&amp;术语</h3><ol><li><p><strong>RDBMS</strong>关系数据库管理系统(Relational Database Management System)术语:</p><pre><code>* **数据库**：关联表的集合* **数据表**：数据的矩阵* **行**(=元组、记录)：一组相关的数据* **列**(=数据元素)：包含相同类型的数据* **冗余**：存储两倍数据，会降低性能但提高数据安全性* **主键**：唯一，一个数据表仅能包含一个主键* **外键**：用于关联两个表* **复合键**(=组合键)：将多个列作为一个索引键，用于复合索引* **索引**：类似书籍目录，索引是对数据库表中一列或多列的值进行排序的一种结构；利用索引快速访问数据库表中的特定信息* **参照完整性**：要求关系中不允许引用不存在的实体；参照完整性与实体完整性是关系模型必须满足的完整性约束条件，目的是保持数据一致性</code></pre><p>注：键的值在当前列中具有唯一性</p></li><li></li></ol><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ol><li><p>插入：INSERT INTO</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [table_name] (field1, field2,...)</span><br><span class="line">VALUES</span><br><span class="line">(value1, value2,...);</span><br></pre></td></tr></table></figure><p>字符型的数据需要使用单引号或者双引号</p></li><li><p>查询：SELECT</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name,column_name </span><br><span class="line">FROM table_name </span><br><span class="line">[WHERE clause]</span><br><span class="line">[LIMIT N][OFFSET M]</span><br></pre></td></tr></table></figure><p>*代替其他字段则SELECT返回表的所有字段数据；</p><p>查询可以使用一个或者多个表，表间默认使用逗号(,)分割</p></li><li><p>条件子句：WHERE</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--WHERE condition1 [AND[OR]] condition2...</span><br></pre></td></tr></table></figure><p>给定条件在表中没有匹配记录时查询不会返回任何数据</p></li><li><p>更新：UPDATE</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table_name SET field1=new-value1, field2=new-value2 </span><br><span class="line">[WHERE clause]</span><br></pre></td></tr></table></figure><p>可以同时更新一个或多个字段</p></li><li><p>删除：DELETE</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM table_name </span><br><span class="line">[WHERE clause]</span><br></pre></td></tr></table></figure><p>没有指定where子句则删除表中所有记录</p></li><li></li></ol><h3 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h3><h4 id="1-查询结果去重"><a href="#1-查询结果去重" class="headerlink" title="1.查询结果去重"></a>1.查询结果去重</h4><p>​    (1) DISTINCT：SELECT <strong>DISTINCT</strong> … from table_name;</p><p>​    (2) group by：SELECT … from table_name <strong>group by</strong> … ;</p><p>​    notes：distinct只能放查询字段最前面，不能放查询字段中间或后面；且<u>distinct对后面所有字段均起作用</u>，也就是说去重是查询所有字段完全重复的数据（查询多个字段，针对一个字段去重，不能使用distinct）</p><p>​    <u>group by也对后面所有字段均起作用</u>，即去重是查询所有字段完全重复的数据，不是只对group by后面连接的单个字段重复的数据（由于group by语法位置可以放在查询字段后，所以查询字段与group by后面分组的字段没有限制）</p><h4 id="2-限制条件"><a href="#2-限制条件" class="headerlink" title="2.限制条件"></a>2.限制条件</h4><p>OFFSET指定SELECT查询的数据偏移量，默认偏移量为0</p><p>​    (1) —<strong>LIMIT</strong> n：从第0+1(m=0)条开始，取n条数据，是 limit 0,n 的缩写</p><p>​    (2) —<strong>LIMIT</strong> m,n：从第m+1条开始，取n条数据</p><p>​    (3) —<strong>LIMIT</strong> n <strong>OFFSET</strong> m：从第m+1条开始，取n条数据</p><p>​    (4) —<strong>WHERE</strong> column_name <strong>IN</strong> (value1,value2,…)</p><p>​    (5) —<strong>WHERE</strong> column_name 操作符 value</p><h4 id="3-重命名查询后的列（对列使用别名）"><a href="#3-重命名查询后的列（对列使用别名）" class="headerlink" title="3.重命名查询后的列（对列使用别名）"></a>3.重命名查询后的列（对列使用别名）</h4><p>​    AS：SELECT old_column_name <strong>AS</strong> new_column_name FROM table_name</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>动态规划</title>
+      <link href="/2023/03/04/2023-3-4-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+      <url>/2023/03/04/2023-3-4-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+      
+        <content type="html"><![CDATA[<p>动态规划即利用历史记录来避免重复计算。思想是将原问题分解为若干子问题，即最优子结构，通过求解子问题完成对最终问题的求解；重复出现的子问题在第一次出现时对其求解，保存其结果作为历史记录从而在求解后续子问题时直接利用，完成对问题的化简。一般解决问题有三个步骤：</p><pre><code>1. 定义一个数组保存历史记录，并确定数组所代表的含义； 2. 确定动态转移方程，即归纳或确定出如何利用历史数据推出新的元素值，确定数组元素之间的关系式； 3. 找到初值，归纳需要初值，历史数据也需要最根的初始值推出新值。</code></pre><h3 id="1-最大子序和"><a href="#1-最大子序和" class="headerlink" title="1. 最大子序和"></a>1. 最大子序和</h3><p>面对该问题，最暴力的解决方式是：时间复杂度$O(n^2)$，两层循环头尾遍历所有子序列。这样其实中间会有很多部分被重复计算累和，例如：</p><div class="table-container"><table><thead><tr><th style="text-align:center">下标</th><th style="text-align:center">0</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th></tr></thead><tbody><tr><td style="text-align:center">值</td><td style="text-align:center">-5</td><td style="text-align:center">-3</td><td style="text-align:center">6</td><td style="text-align:center">4</td><td style="text-align:center">1</td><td style="text-align:center">-2</td></tr></tbody></table></div><p>0~3之间的连续子数列有：0，1，2，3，(0,1)，(1,2)，(2,3)，(0,1,2)…</p><p>(0,1,2)显然需要重复计算(0,1)，也就是说其实可以直接给(0,1,2)直接提供(0,1)的运算结果或者历史记录，而不用重复这个计算过程。</p><p>如果希望进一步优化有一个时间复杂度和空间复杂度均为$O(n)$的实现，就可以考虑动态规划：</p><p>假设数组$nums$长度为$n$，下标为$0 $~$ n-1$</p><h4 id="1-思路"><a href="#1-思路" class="headerlink" title="(1) 思路"></a>(1) 思路</h4><p>​    以$f(i)$代表以$nums[i]$为结尾的<u>连续子数组的最大和</u>，需要求的答案则是$max{f(i)}$，$0 \le i \le n-1$。</p><p>​    对于每个$f(i)$，则满足动态规划转移方程$f(i)=max{f(i-1)+nums[i],num[i]}$</p><p>​    $f(i)$来自==包含$nums[i]$的前$x$($ 0\le x \le i+1$)项连续数组和==或者==$nums[i]$本身==，即考虑由$nums[i]$开始一段新的子数列，或者让$nums[i]$加入$f(i-1)$对应的子数列。</p><p>​    动态规划的关键就在于转移方程，最大子序和问题中，$f(i)$只和$f(i-1)$相关，而$f(i)$的结果一定包含$nums[i]$，$f(i-1)$同理，保证$f(i)$的结果来自连续的某段数组，即子序列。</p><h4 id="2-算法"><a href="#2-算法" class="headerlink" title="(2) 算法"></a>(2) 算法</h4><p>​    由思路可以得出时间复杂度为$O(n)$的算法：用$f$数组保存上述$f(i)$的值，$f(i)$由一层顺序循环和转移方程求出。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 算法学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>小程序开发</title>
+      <link href="/2023/03/01/2023-3-1-%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/"/>
+      <url>/2023/03/01/2023-3-1-%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/</url>
+      
+        <content type="html"><![CDATA[<h3 id="1-软件运作模式"><a href="#1-软件运作模式" class="headerlink" title="1.软件运作模式"></a>1.软件运作模式</h3><p>前端（客户端）：网站页面、小程序、APP</p><p>后端（服务器端）：</p><div class="table-container"><table><thead><tr><th>操作系统</th><th style="text-align:center">代码</th><th style="text-align:center">数据库</th></tr></thead><tbody><tr><td></td><td style="text-align:center">处理数据</td><td style="text-align:center">存储数据</td></tr></tbody></table></div><p>用户由前端访问并进行用户行为，用户行为产生网络请求，服务器接收到请求，代码根据请求的内容调用数据库的接口读取数据，得到数据库返回的原始数据，代码再进一步加工数据，得到客户端能够接收的数据格式并返回给客户端，用户得到用户行为的反馈。</p><p>由此，客户端主要功能是展示数据；服务端主要功能是接收请求、处理数据、操作数据库和存储数据；用户行为关联起了前后端。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A(用户需求)--&gt;B--&gt;C</span><br><span class="line">C--&gt;D1--&gt;D2--&gt;F</span><br><span class="line">C--&gt;E1--&gt;E2--&gt;F</span><br><span class="line">B(需求文档)</span><br><span class="line">C(前端界面实现)</span><br><span class="line">D1(UI设计)</span><br><span class="line">D2(前端界面实现)</span><br><span class="line">E1(数据库设计)</span><br><span class="line">E2(后端接口实现)</span><br><span class="line">F(前端后端打通)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 开发实践 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>区块链</title>
       <link href="/2023/02/14/2023-2-14-%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
       <url>/2023/02/14/2023-2-14-%E5%8C%BA%E5%9D%97%E9%93%BE/</url>
@@ -39,17 +96,6 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>about</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -61,11 +107,11 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/indexpage.css"/>
-      <url>/css/indexpage.css</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[/* 页脚与头图透明 */#footer {    background: transparent !important;}#page-header {    background: transparent !important;}/* 白天模式遮罩透明 */#footer::before {    background: transparent !important;}#page-header::before {    background: transparent !important;}/* 夜间模式遮罩透明 */[data-theme="dark"] #footer::before {    background: transparent !important;}[data-theme="dark"] #page-header::before {    background: transparent !important;}/* 一级菜单居中 */#nav .menus_items {    position: absolute !important;    width: fit-content !important;    left: 50% !important;    transform: translateX(-50%) !important;}/* 子菜单横向展示 */#nav .menus_items .menus_item:hover .menus_item_child {    display: flex !important;}/* 这里的2是代表导航栏的第2个元素，即有子菜单的元素，可以按自己需求修改 */.menus_items .menus_item:nth-child(5) .menus_item_child {    left: -40px;}/* 夜间模式菜单栏发光字 */[data-theme="dark"] #nav .site-page,[data-theme="dark"] #nav .menus_items .menus_item .menus_item_child li a {    text-shadow: 0 0 2px rgb(255, 255, 255) !important;}/* 手机端适配 */[data-theme="dark"] #sidebar #sidebar-menus .menus_items .site-page {    text-shadow: 0 0 2px rgb(255, 255, 255) !important;}/* 闪烁变动颜色连续渐变 */#site-name,#site-title,#site-subtitle,#post-info,.author-info__name,.author-info__description {    transition: text-shadow 1s linear !important;}/*页面样式调节*/:root {    --trans-light: rgba(255, 255, 255, 0.5);    --trans-dark: rgba(25, 25, 25, 0.5);    --border-style: 1px solid rgb(169, 169, 169);    --backdrop-filter: blur(5px) saturate(150%);}/* 首页文章卡片 */#recent-posts > .recent-post-item {    background: var(--trans-light);    backdrop-filter: var(--backdrop-filter);    border-radius: 25px;    border: var(--border-style);}/* 首页侧栏卡片 */#aside-content .card-widget {    background: var(--trans-light);    backdrop-filter: var(--backdrop-filter);    border-radius: 18px;    border: var(--border-style);}/* 文章页、归档页、普通页面 */div#post,div#page,div#archive {    background: var(--trans-light);    backdrop-filter: var(--backdrop-filter);    border: var(--border-style);    border-radius: 20px;}/* 导航栏 */#page-header.nav-fixed #nav {    background: rgba(255, 255, 255, 0.75);    backdrop-filter: var(--backdrop-filter);}[data-theme="dark"] #page-header.nav-fixed #nav {    background: rgba(0, 0, 0, 0.7) !important;}/* 夜间模式遮罩 */[data-theme="dark"] #recent-posts > .recent-post-item,[data-theme="dark"] #aside-content .card-widget,[data-theme="dark"] div#post,[data-theme="dark"] div#archive,[data-theme="dark"] div#page {    background: var(--trans-dark);}/* 夜间模式页脚页头遮罩透明 */[data-theme="dark"] #footer::before {    background: transparent !important;}[data-theme="dark"] #page-header::before {    background: transparent !important;}/* 阅读模式 */.read-mode #aside-content .card-widget {    background: rgba(158, 204, 171, 0.5) !important;}.read-mode div#post {    background: rgba(158, 204, 171, 0.5) !important;}/* 夜间模式下的阅读模式 */[data-theme="dark"] .read-mode #aside-content .card-widget {    background: rgba(25, 25, 25, 0.9) !important;    color: #ffffff;}[data-theme="dark"] .read-mode div#post {    background: rgba(25, 25, 25, 0.9) !important;    color: #ffffff;}@font-face {    /* 为载入的字体取名字(随意) */    font-family: 'LXGW-R';    /* 字体文件地址(相对或者绝对路径都可以) */    src: url(../font/LXGWWenKaiGB-Regular.ttf);    /* 定义加粗样式(加粗多少) */    font-weight: normal;    /* 定义字体样式(斜体/非斜体) */    font-style: normal;    /* 定义显示样式 */    font-display: block;}/* 文章页H1-H6图标样式效果 *//* 控制风车转动速度 4s那里可以自己调节快慢 */h1::before,h2::before,h3::before,h4::before,h5::before,h6::before {    -webkit-animation: ccc 4s linear infinite;    animation: ccc 4s linear infinite;}/* 控制风车转动方向 -1turn 为逆时针转动，1turn 为顺时针转动，相同数字部分记得统一修改 */@-webkit-keyframes ccc {    0% {        -webkit-transform: rotate(0deg);        transform: rotate(0deg);    }    to {        -webkit-transform: rotate(-1turn);        transform: rotate(-1turn);    }}@keyframes ccc {    0% {        -webkit-transform: rotate(0deg);        transform: rotate(0deg);    }    to {        -webkit-transform: rotate(-1turn);        transform: rotate(-1turn);    }}/* 设置风车颜色 */#content-inner.layout h1::before {    color: #005CAF;    margin-left: -1.55rem;    font-size: 1.3rem;    margin-top: -0.23rem;}#content-inner.layout h2::before {    color: #2EA9DF;    margin-left: -1.35rem;    font-size: 1.1rem;    margin-top: -0.12rem;}#content-inner.layout h3::before {    color: #58B2DC;    margin-left: -1.22rem;    font-size: 0.95rem;    margin-top: -0.09rem;}#content-inner.layout h4::before {    color: #78C2C4;    margin-left: -1.05rem;    font-size: 0.8rem;    margin-top: -0.09rem;}#content-inner.layout h5::before {    color: #81C7D4;    margin-left: -0.9rem;    font-size: 0.7rem;    margin-top: 0rem;}#content-inner.layout h6::before {    color: #A5DEE4;    margin-left: -0.9rem;    font-size: 0.66rem;    margin-top: 0rem;}/* s设置风车hover动效 6s那里可以自己调节快慢*/#content-inner.layout h1:hover,#content-inner.layout h2:hover,#content-inner.layout h3:hover,#content-inner.layout h4:hover,#content-inner.layout h5:hover,#content-inner.layout h6:hover {    color: #FFFFFF;}#content-inner.layout h1:hover::before,#content-inner.layout h2:hover::before,#content-inner.layout h3:hover::before,#content-inner.layout h4:hover::before,#content-inner.layout h5:hover::before,#content-inner.layout h6:hover::before {    color: #FFFFFF;    -webkit-animation: ccc 20s linear infinite;    animation: ccc 20s linear infinite;}/*#article-container li::marker{    color: #6f42c1!important;}*//* 头像呼吸灯 */[data-theme="light"] .avatar-img {    animation: huxi_light 4s ease-in-out infinite;}[data-theme="dark"] .avatar-img {    animation: huxi_dark 4s ease-in-out infinite;}@keyframes huxi_light {    0% {        box-shadow: 0px 0px 1px 1px #e9f5fa;    }    50% {        box-shadow: 0px 0px 5px 5px #e9f5fa;    }    100% {        box-shadow: 0px 0px 1px 1px #e9f5fa;    }}@keyframes huxi_dark {    0% {        box-shadow: 0px 0px 1px 1px #F1F0AD;    }    50% {        box-shadow: 0px 0px 5px 5px #F1F0AD;    }    100% {        box-shadow: 0px 0px 1px 1px #F1F0AD;    }}]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -88,6 +134,28 @@
       <url>/css/musicpage.css</url>
       
         <content type="html"><![CDATA[#page:has(#anMusic-page) {    border: 0;    box-shadow: none !important;    padding: 0 !important;    background: transparent !important;}#an_music_bg {    display: none;    filter: blur(63px);    opacity: 0.6;    position: fixed;    z-index: -999;    background-attachment: local;    background-position: center center;    background-size: cover;    background-repeat: no-repeat;    width: 200%;    height: 200%;    top: -50%;    left: -50%;    transform: rotate(0deg);}body:has(#anMusic-page) #an_music_bg {    display: block;}body:has(#anMusic-page) {    background: rgb(13, 13, 13);}#anMusic-page meting-js .aplayer {    display: flex;    flex-direction: row-reverse;    background: rgba(0, 0, 0, 0);    border: none;    box-shadow: none;}body:has(#anMusic-page) #web_bg {    display: none;}body:has(#anMusic-page) #footer,body:has(#anMusic-page) #nav-music {    display: none;}#anMusic-page .aplayer-body {    width: 40%;    height: 75vh;}#anMusic-page ol > li:hover {    background: #ffffff33;    border-radius: 6px;}#anMusic-page .aplayer-pic {    float: none;    width: 180px;    height: 180px;    border-radius: 12px;    margin: auto;    left: 0;    right: 0;}#anMusic-page .aplayer-info {    margin: 0 20px 0 20px;    border-bottom: none;}#anMusic-page .aplayer-info .aplayer-music {    text-align: center;    height: auto;    margin: 15px;}#anMusic-page .aplayer-info .aplayer-music .aplayer-author,#anMusic-page .aplayer-info .aplayer-music .aplayer-title {    font-size: 2rem;    font-weight: 700;    color: #fff;}#anMusic-page .aplayer-info .aplayer-lrc {    height: 800%;    margin-top: 80px;    mask-image: linear-gradient(to bottom, #000, #000, #000, #000, #000, #000, #000, #000, #000, #000, #0000, #0000);}#anMusic-page .aplayer-info .aplayer-lrc p {    font-size: 14px;    color: #fff;}#anMusic-page .aplayer .aplayer-lrc:after,#anMusic-page .aplayer .aplayer-lrc:before {    display: none;}/* 控制器 */#anMusic-page .aplayer-info .aplayer-controller {    position: fixed;    max-width: 1500px;    margin: auto;    left: 0;    right: 0;    bottom: 50px;}#anMusic-page .aplayer-info .aplayer-controller .aplayer-bar-wrap {    margin: 0 160px 0 150px;}#anMusic-page .aplayer-info .aplayer-controller .aplayer-played {    background: var(--lune-white) !important;}#anMusic-page .aplayer-info .aplayer-controller .aplayer-thumb {    -webkit-transform: none;    transform: none;    background: #fff !important;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-back,#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-forward,#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-play {    display: inline;    position: fixed;}#anMusic-page .aplayer-info .aplayer-time {    position: absolute;    width: 100%;    bottom: 21px;    height: 0;    display: flex;    justify-content: flex-end;}#anMusic-page .aplayer-info .aplayer-time .aplayer-time-inner {    margin-right: 18px;    margin-top: -8px;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-back {    position: absolute;    left: 0;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-play {    position: absolute;    left: 40px;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-forward {    position: absolute;    left: 80px;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon {    width: 2rem;    height: 2rem;    margin-left: 15px;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon-menu {    display: none;}#anMusic-page .aplayer-info .aplayer-time .aplayer-icon path {    fill: var(--lune-white);    opacity: 0.8;}#anMusic-page .aplayer-list {    width: 60%;    max-height: none !important;    height: 100%;}#anMusic-page ol {    max-height: 75vh !important;    padding-right: 25px;}#anMusic-page ol > li {    border-top: 1px solid transparent;    font-size: 14px;}#anMusic-page ol > li.aplayer-list-light {    background: rgb(255 255 255 / 20%);    border-radius: 6px;}#anMusic-page ol > li span {    color: var(--lune-white);}#anMusic-page ol > li.aplayer-list-light .aplayer-list-cur {    display: none;}#anMusic-page ol > li span.aplayer-list-author {    opacity: 0.6;}/* 导航栏 */.page:has(#anMusic-page) #nav {    backdrop-filter: none !important;    background: 0 0 !important;    border-bottom: none !important;}.page:has(#anMusic-page) #page-header.not-top-img #nav a,.page:has(#anMusic-page) #page-header #nav .back-home-button {    color: var(--lune-white);}body:has(#anMusic-page) .s-sticker div {    color: var(--lune-white) !important;}body:has(#anMusic-page) .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.aplayer-icon-loop {    margin-right: 15px;}[data-theme="dark"] .page:has(#anMusic-page) #page-header:before {    background-color: transparent;}/* **** 移动端样式 ***** */@media screen and (max-width: 768px) {    body:has(#anMusic-page) #rightside {        display: none;    }    body:has(#anMusic-page) #content-inner,    body:has(#anMusic-page) #page {        z-index: auto;    }    /* 歌曲列表 */    #anMusic-page .aplayer-list {        position: fixed;        z-index: 1002;        width: 100%;        bottom: -76%;        left: 0;        background: var(--sidebar-bg);        height: auto;        border-radius: 15px 15px 0px 0px;        padding: 15px 0px;    }    #anMusic-page .aplayer-list.aplayer-list-hide {        bottom: 0% !important;    }    #anMusic-page ol {        max-height: 60vh !important;        padding-right: 0px;    }    #anMusic-page ol > li {        display: flex;        margin: 0 10px;    }    #anMusic-page ol > li span {        color: var(--font-color);    }    #anMusic-page ol > li span.aplayer-list-title {        width: 30%;    }    #anMusic-page ol > li.aplayer-list-light {        background: #33a673;        padding: 5px 20px;        border-radius: 10px;    }    #anMusic-page ol > li.aplayer-list-light span {        color: #fff;    }    #anMusic-page ol > li span.aplayer-list-title {        max-width: 55%;        width: auto;        display: -webkit-box;        -webkit-line-clamp: 1;        overflow: hidden;        -webkit-box-orient: vertical;    }    #anMusic-page ol > li span.aplayer-list-author {        position: absolute;        right: 10px;        width: auto;        max-width: 35%;        display: -webkit-box;        -webkit-line-clamp: 1;        overflow: hidden;        -webkit-box-orient: vertical;    }    #anMusic-page ol > li.aplayer-list-light span.aplayer-list-author {        right: 15px;    }    /* 歌词信息 */    #anMusic-page .aplayer-body {        width: 100%;        position: fixed;        margin: auto;        left: 0;        right: 0;        top: 100px;    }    #anMusic-page .aplayer-info .aplayer-lrc {        margin-top: 40px;        height: auto;        max-height: 200%;        min-height: 100%;        mask-image: linear-gradient(to bottom, #000, #000, #000, #000, #0000, #0000);    }    #anMusic-page .aplayer-info .aplayer-lrc p.aplayer-lrc-current {        color: #33a673;    }    /* 控制按键和进度条 */    #anMusic-page .aplayer-info .aplayer-controller {        width: 100%;        bottom: 100px;    }    #anMusic-page .aplayer-info .aplayer-controller .aplayer-bar-wrap {        margin: 0 30px;    }    #anMusic-page .aplayer-info .aplayer-time {        bottom: -40px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-time-inner {        position: absolute;        width: 100%;        margin-right: 0;        margin-top: -33px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-time-inner .aplayer-dtime {        position: absolute;        right: 30px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-time-inner .aplayer-ptime {        position: absolute;        left: 35px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-icon-back {        margin: auto;        right: 110px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-icon-play {        margin: auto;        right: 0;        left: 0;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-icon-forward {        margin: auto;        left: 110px;        right: 0;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-icon-order {        position: absolute;        left: 22px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-icon-loop {        position: absolute;        right: 25px;    }    #anMusic-page .aplayer-info .aplayer-time .aplayer-icon-menu {        display: inline;        position: absolute;        right: 25px;        top: -90px;    }    #anMusic-page .aplayer-volume-bar-wrap {        bottom: 0px;        right: 7px;    }    #anMusic-page .aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap {        left: -66px;    }}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/css/progress_bar.css"/>
+      <url>/css/progress_bar.css</url>
+      
+        <content type="html"><![CDATA[.pace {    -webkit-pointer-events: none;    pointer-events: none;    -webkit-user-select: none;    -moz-user-select: none;    user-select: none;    z-index: 2000;    position: fixed;    margin: auto;    top: 10px;    left: 0;    right: 0;    height: 8px;    border-radius: 8px;    width: 4rem;    background: #eaecf2;    border: 1px #e3e8f7;    overflow: hidden;}.pace-inactive .pace-progress {    opacity: 0;    transition: 0.3s ease-in;}.pace .pace-progress {    -webkit-box-sizing: border-box;    -moz-box-sizing: border-box;    -ms-box-sizing: border-box;    -o-box-sizing: border-box;    box-sizing: border-box;    -webkit-transform: translate3d(0, 0, 0);    -moz-transform: translate3d(0, 0, 0);    -ms-transform: translate3d(0, 0, 0);    -o-transform: translate3d(0, 0, 0);    transform: translate3d(0, 0, 0);    max-width: 200px;    position: absolute;    z-index: 2000;    display: block;    top: 0;    right: 100%;    height: 100%;    width: 100%;    background: linear-gradient(-45deg, #e6b8af, #f4cccc, #fce5cd, #fff2cc);    animation: gradient 1.5s ease infinite;    background-size: 200%;}.pace.pace-inactive {    opacity: 0;    transition: 0.3s;    top: -8px;}@keyframes gradient {    0% {        background-position: 0% 50%;    }    50% {        background-position: 100% 50%;    }    100% {        background-position: 0% 50%;    }}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/css/indexpage.css"/>
+      <url>/css/indexpage.css</url>
+      
+        <content type="html"><![CDATA[/* 页脚与头图透明 */#footer {    background: transparent !important;}#page-header {    background: transparent !important;}/* 白天模式遮罩透明 */#footer::before {    background: transparent !important;}#page-header::before {    background: transparent !important;}/* 夜间模式遮罩透明 */[data-theme="dark"] #footer::before {    background: transparent !important;}[data-theme="dark"] #page-header::before {    background: transparent !important;}/* 一级菜单居中 */#nav .menus_items {    position: absolute !important;    width: fit-content !important;    left: 50% !important;    transform: translateX(-50%) !important;}/* 子菜单横向展示 */#nav .menus_items .menus_item:hover .menus_item_child {    display: flex !important;}/* 这里的2是代表导航栏的第2个元素，即有子菜单的元素，可以按自己需求修改 */.menus_items .menus_item:nth-child(5) .menus_item_child {    left: -40px;}/* 夜间模式菜单栏发光字 */[data-theme="dark"] #nav .site-page,[data-theme="dark"] #nav .menus_items .menus_item .menus_item_child li a {    text-shadow: 0 0 2px rgb(255, 255, 255) !important;}/* 手机端适配 */[data-theme="dark"] #sidebar #sidebar-menus .menus_items .site-page {    text-shadow: 0 0 2px rgb(255, 255, 255) !important;}/* 闪烁变动颜色连续渐变 */#site-name,#site-title,#site-subtitle,#post-info,.author-info__name,.author-info__description {    transition: text-shadow 1s linear !important;}/*页面样式调节*/:root {    --trans-light: rgba(255, 255, 255, 0.5);    --trans-dark: rgba(25, 25, 25, 0.5);    --border-style: 1px solid rgb(169, 169, 169);    --backdrop-filter: blur(5px) saturate(150%);}/* 首页文章卡片 */#recent-posts > .recent-post-item {    background: var(--trans-light);    backdrop-filter: var(--backdrop-filter);    border-radius: 25px;    border: var(--border-style);}/* 首页侧栏卡片 */#aside-content .card-widget {    background: var(--trans-light);    backdrop-filter: var(--backdrop-filter);    border-radius: 18px;    border: var(--border-style);}/* 文章页、归档页、普通页面 */div#post,div#page,div#archive {    background: var(--trans-light);    backdrop-filter: var(--backdrop-filter);    border: var(--border-style);    border-radius: 20px;}/* 导航栏 */#page-header.nav-fixed #nav {    background: rgba(255, 255, 255, 0.75);    backdrop-filter: var(--backdrop-filter);}[data-theme="dark"] #page-header.nav-fixed #nav {    background: rgba(0, 0, 0, 0.7) !important;}/* 夜间模式遮罩 */[data-theme="dark"] #recent-posts > .recent-post-item,[data-theme="dark"] #aside-content .card-widget,[data-theme="dark"] div#post,[data-theme="dark"] div#archive,[data-theme="dark"] div#page {    background: var(--trans-dark);}/* 夜间模式页脚页头遮罩透明 */[data-theme="dark"] #footer::before {    background: transparent !important;}[data-theme="dark"] #page-header::before {    background: transparent !important;}/* 阅读模式 */.read-mode #aside-content .card-widget {    background: rgba(158, 204, 171, 0.5) !important;}.read-mode div#post {    background: rgba(158, 204, 171, 0.5) !important;}/* 夜间模式下的阅读模式 */[data-theme="dark"] .read-mode #aside-content .card-widget {    background: rgba(25, 25, 25, 0.9) !important;    color: #ffffff;}[data-theme="dark"] .read-mode div#post {    background: rgba(25, 25, 25, 0.9) !important;    color: #ffffff;}@font-face {    /* 为载入的字体取名字(随意) */    font-family: 'LXGW-R';    /* 字体文件地址(相对或者绝对路径都可以) */    src: url(../font/LXGWWenKaiGB-Regular.ttf);    /* 定义加粗样式(加粗多少) */    font-weight: normal;    /* 定义字体样式(斜体/非斜体) */    font-style: normal;    /* 定义显示样式 */    font-display: block;}/* loading动画 */.loading-img {    background: url(../assets/lune_cache.jpg) no-repeat center center;    background-size: cover;}/* 文章页H1-H6图标样式效果 *//* 控制风车转动速度 4s那里可以自己调节快慢 */h1::before,h2::before,h3::before,h4::before,h5::before,h6::before {    -webkit-animation: ccc 4s linear infinite;    animation: ccc 4s linear infinite;}/* 控制风车转动方向 -1turn 为逆时针转动，1turn 为顺时针转动，相同数字部分记得统一修改 */@-webkit-keyframes ccc {    0% {        -webkit-transform: rotate(0deg);        transform: rotate(0deg);    }    to {        -webkit-transform: rotate(-1turn);        transform: rotate(-1turn);    }}@keyframes ccc {    0% {        -webkit-transform: rotate(0deg);        transform: rotate(0deg);    }    to {        -webkit-transform: rotate(-1turn);        transform: rotate(-1turn);    }}/* 设置风车颜色 */#content-inner.layout h1::before {    color: #005CAF;    margin-left: -1.55rem;    font-size: 1.3rem;    margin-top: -0.23rem;}#content-inner.layout h2::before {    color: #2EA9DF;    margin-left: -1.35rem;    font-size: 1.1rem;    margin-top: -0.12rem;}#content-inner.layout h3::before {    color: #58B2DC;    margin-left: -1.22rem;    font-size: 0.95rem;    margin-top: -0.09rem;}#content-inner.layout h4::before {    color: #78C2C4;    margin-left: -1.05rem;    font-size: 0.8rem;    margin-top: -0.09rem;}#content-inner.layout h5::before {    color: #81C7D4;    margin-left: -0.9rem;    font-size: 0.7rem;    margin-top: 0rem;}#content-inner.layout h6::before {    color: #A5DEE4;    margin-left: -0.9rem;    font-size: 0.66rem;    margin-top: 0rem;}/* s设置风车hover动效 6s那里可以自己调节快慢*/#content-inner.layout h1:hover,#content-inner.layout h2:hover,#content-inner.layout h3:hover,#content-inner.layout h4:hover,#content-inner.layout h5:hover,#content-inner.layout h6:hover {    color: #FFFFFF;}#content-inner.layout h1:hover::before,#content-inner.layout h2:hover::before,#content-inner.layout h3:hover::before,#content-inner.layout h4:hover::before,#content-inner.layout h5:hover::before,#content-inner.layout h6:hover::before {    color: #FFFFFF;    -webkit-animation: ccc 20s linear infinite;    animation: ccc 20s linear infinite;}/*#article-container li::marker{    color: #6f42c1!important;}*//* 头像呼吸灯 */[data-theme="light"] .avatar-img {    animation: huxi_light 4s ease-in-out infinite;}[data-theme="dark"] .avatar-img {    animation: huxi_dark 4s ease-in-out infinite;}@keyframes huxi_light {    0% {        box-shadow: 0px 0px 1px 1px #e9f5fa;    }    50% {        box-shadow: 0px 0px 5px 5px #e9f5fa;    }    100% {        box-shadow: 0px 0px 1px 1px #e9f5fa;    }}@keyframes huxi_dark {    0% {        box-shadow: 0px 0px 1px 1px #F1F0AD;    }    50% {        box-shadow: 0px 0px 5px 5px #F1F0AD;    }    100% {        box-shadow: 0px 0px 1px 1px #F1F0AD;    }}]]></content>
       
     </entry>
     
@@ -128,17 +196,6 @@
     
     <entry>
       <title></title>
-      <link href="/js/lunefunction.js"/>
-      <url>/js/lunefunction.js</url>
-      
-        <content type="html"><![CDATA[// 音乐绑定事件function musicBindEvent() {    document.querySelector("#nav-music .aplayer-music").addEventListener("click", function () {        lune.musicTelescopic();    });    document.querySelector("#nav-music .aplayer-button").addEventListener("click", function () {        lune.musicToggle(false);    });}]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/js/lune.js"/>
       <url>/js/lune.js</url>
       
@@ -161,10 +218,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/sun_moon.js"/>
-      <url>/js/sun_moon.js</url>
+      <link href="/js/lunefunction.js"/>
+      <url>/js/lunefunction.js</url>
       
-        <content type="html"><![CDATA[function switchNightMode() {    document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>'),        setTimeout(function() {            document.querySelector('body').classList.contains('DarkMode') ? (document.querySelector('body').classList.remove('DarkMode'), localStorage.setItem('isDark', '0'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')) : (document.querySelector('body').classList.add('DarkMode'), localStorage.setItem('isDark', '1'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')),                setTimeout(function() {                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.transition = 'opacity 3s';                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.opacity = '0';                    setTimeout(function() {                        document.getElementsByClassName('Cuteen_DarkSky')[0].remove();                    }, 1e3);                }, 2e3)        })    const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'    if (nowMode === 'light') {        activateDarkMode()        saveToLocal.set('theme', 'dark', 2)        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)        document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')    } else {        activateLightMode()        saveToLocal.set('theme', 'light', 2)        document.querySelector('body').classList.add('DarkMode'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')    }    // handle some cases    typeof utterancesTheme === 'function' && utterancesTheme()    typeof FB === 'object' && window.loadFBComment()    window.DISQUS && document.getElementById('disqus_thread').children.length && setTimeout(() => window.disqusReset(), 200)}]]></content>
+        <content type="html"><![CDATA[// 音乐绑定事件function musicBindEvent() {    document.querySelector("#nav-music .aplayer-music").addEventListener("click", function () {        lune.musicTelescopic();    });    document.querySelector("#nav-music .aplayer-button").addEventListener("click", function () {        lune.musicToggle(false);    });}]]></content>
       
     </entry>
     
@@ -183,21 +240,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/universe.js"/>
-      <url>/js/universe.js</url>
+      <link href="/js/sun_moon.js"/>
+      <url>/js/sun_moon.js</url>
       
-        <content type="html"><![CDATA[function dark() {window.requestAnimationFrame=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame;var n,e,i,h,t=.05,s=document.getElementById("universe"),o=!0,a="180,184,240",r="226,225,142",d="226,225,224",c=[];function f(){n=window.innerWidth,e=window.innerHeight,i=.216*n,s.setAttribute("width",n),s.setAttribute("height",e)}function u(){h.clearRect(0,0,n,e);for(var t=c.length,i=0;i<t;i++){var s=c[i];s.move(),s.fadeIn(),s.fadeOut(),s.draw()}}function y(){this.reset=function(){this.giant=m(3),this.comet=!this.giant&&!o&&m(10),this.x=l(0,n-10),this.y=l(0,e),this.r=l(1.1,2.6),this.dx=l(t,6*t)+(this.comet+1-1)*t*l(50,120)+2*t,this.dy=-l(t,6*t)-(this.comet+1-1)*t*l(50,120),this.fadingOut=null,this.fadingIn=!0,this.opacity=0,this.opacityTresh=l(.2,1-.4*(this.comet+1-1)),this.do=l(5e-4,.002)+.001*(this.comet+1-1)},this.fadeIn=function(){this.fadingIn&&(this.fadingIn=!(this.opacity>this.opacityTresh),this.opacity+=this.do)},this.fadeOut=function(){this.fadingOut&&(this.fadingOut=!(this.opacity<0),this.opacity-=this.do/2,(this.x>n||this.y<0)&&(this.fadingOut=!1,this.reset()))},this.draw=function(){if(h.beginPath(),this.giant)h.fillStyle="rgba("+a+","+this.opacity+")",h.arc(this.x,this.y,2,0,2*Math.PI,!1);else if(this.comet){h.fillStyle="rgba("+d+","+this.opacity+")",h.arc(this.x,this.y,1.5,0,2*Math.PI,!1);for(var t=0;t<30;t++)h.fillStyle="rgba("+d+","+(this.opacity-this.opacity/20*t)+")",h.rect(this.x-this.dx/4*t,this.y-this.dy/4*t-2,2,2),h.fill()}else h.fillStyle="rgba("+r+","+this.opacity+")",h.rect(this.x,this.y,this.r,this.r);h.closePath(),h.fill()},this.move=function(){this.x+=this.dx,this.y+=this.dy,!1===this.fadingOut&&this.reset(),(this.x>n-n/4||this.y<0)&&(this.fadingOut=!0)},setTimeout(function(){o=!1},50)}function m(t){return Math.floor(1e3*Math.random())+1<10*t}function l(t,i){return Math.random()*(i-t)+t}f(),window.addEventListener("resize",f,!1),function(){h=s.getContext("2d");for(var t=0;t<i;t++)c[t]=new y,c[t].reset();u()}(),function t(){document.getElementsByTagName('html')[0].getAttribute('data-theme')=='dark'&&u(),window.requestAnimationFrame(t)}()};dark()]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/js/title.js"/>
-      <url>/js/title.js</url>
-      
-        <content type="html"><![CDATA[//动态标题var OriginTitile = document.title;var titleTime;document.addEventListener('visibilitychange', function () {    if (document.hidden) {        //离开当前页面时标签显示内容        document.title = '🌘 folding...';        clearTimeout(titleTime);    } else {        //返回当前页面时标签显示内容        document.title = '🌕 welcome :)';        //两秒后变回正常标题        titleTime = setTimeout(function () {            document.title = OriginTitile;        }, 2000);    }});]]></content>
+        <content type="html"><![CDATA[function switchNightMode() {    document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>'),        setTimeout(function() {            document.querySelector('body').classList.contains('DarkMode') ? (document.querySelector('body').classList.remove('DarkMode'), localStorage.setItem('isDark', '0'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')) : (document.querySelector('body').classList.add('DarkMode'), localStorage.setItem('isDark', '1'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')),                setTimeout(function() {                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.transition = 'opacity 3s';                    document.getElementsByClassName('Cuteen_DarkSky')[0].style.opacity = '0';                    setTimeout(function() {                        document.getElementsByClassName('Cuteen_DarkSky')[0].remove();                    }, 1e3);                }, 2e3)        })    const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'    if (nowMode === 'light') {        activateDarkMode()        saveToLocal.set('theme', 'dark', 2)        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)        document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')    } else {        activateLightMode()        saveToLocal.set('theme', 'light', 2)        document.querySelector('body').classList.add('DarkMode'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')    }    // handle some cases    typeof utterancesTheme === 'function' && utterancesTheme()    typeof FB === 'object' && window.loadFBComment()    window.DISQUS && document.getElementById('disqus_thread').children.length && setTimeout(() => window.disqusReset(), 200)}]]></content>
       
     </entry>
     
@@ -215,6 +261,28 @@
     
     
     <entry>
+      <title></title>
+      <link href="/js/title.js"/>
+      <url>/js/title.js</url>
+      
+        <content type="html"><![CDATA[//动态标题var OriginTitile = document.title;var titleTime;document.addEventListener('visibilitychange', function () {    if (document.hidden) {        //离开当前页面时标签显示内容        document.title = '🌘 folding...';        clearTimeout(titleTime);    } else {        //返回当前页面时标签显示内容        document.title = '🌕 welcome :)';        //两秒后变回正常标题        titleTime = setTimeout(function () {            document.title = OriginTitile;        }, 2000);    }});]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/js/universe.js"/>
+      <url>/js/universe.js</url>
+      
+        <content type="html"><![CDATA[function dark() {window.requestAnimationFrame=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame;var n,e,i,h,t=.05,s=document.getElementById("universe"),o=!0,a="180,184,240",r="226,225,142",d="226,225,224",c=[];function f(){n=window.innerWidth,e=window.innerHeight,i=.216*n,s.setAttribute("width",n),s.setAttribute("height",e)}function u(){h.clearRect(0,0,n,e);for(var t=c.length,i=0;i<t;i++){var s=c[i];s.move(),s.fadeIn(),s.fadeOut(),s.draw()}}function y(){this.reset=function(){this.giant=m(3),this.comet=!this.giant&&!o&&m(10),this.x=l(0,n-10),this.y=l(0,e),this.r=l(1.1,2.6),this.dx=l(t,6*t)+(this.comet+1-1)*t*l(50,120)+2*t,this.dy=-l(t,6*t)-(this.comet+1-1)*t*l(50,120),this.fadingOut=null,this.fadingIn=!0,this.opacity=0,this.opacityTresh=l(.2,1-.4*(this.comet+1-1)),this.do=l(5e-4,.002)+.001*(this.comet+1-1)},this.fadeIn=function(){this.fadingIn&&(this.fadingIn=!(this.opacity>this.opacityTresh),this.opacity+=this.do)},this.fadeOut=function(){this.fadingOut&&(this.fadingOut=!(this.opacity<0),this.opacity-=this.do/2,(this.x>n||this.y<0)&&(this.fadingOut=!1,this.reset()))},this.draw=function(){if(h.beginPath(),this.giant)h.fillStyle="rgba("+a+","+this.opacity+")",h.arc(this.x,this.y,2,0,2*Math.PI,!1);else if(this.comet){h.fillStyle="rgba("+d+","+this.opacity+")",h.arc(this.x,this.y,1.5,0,2*Math.PI,!1);for(var t=0;t<30;t++)h.fillStyle="rgba("+d+","+(this.opacity-this.opacity/20*t)+")",h.rect(this.x-this.dx/4*t,this.y-this.dy/4*t-2,2,2),h.fill()}else h.fillStyle="rgba("+r+","+this.opacity+")",h.rect(this.x,this.y,this.r,this.r);h.closePath(),h.fill()},this.move=function(){this.x+=this.dx,this.y+=this.dy,!1===this.fadingOut&&this.reset(),(this.x>n-n/4||this.y<0)&&(this.fadingOut=!0)},setTimeout(function(){o=!1},50)}function m(t){return Math.floor(1e3*Math.random())+1<10*t}function l(t,i){return Math.random()*(i-t)+t}f(),window.addEventListener("resize",f,!1),function(){h=s.getContext("2d");for(var t=0;t<i;t++)c[t]=new y,c[t].reset();u()}(),function t(){document.getElementsByTagName('html')[0].getAttribute('data-theme')=='dark'&&u(),window.requestAnimationFrame(t)}()};dark()]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>movie</title>
       <link href="/movies/index.html"/>
       <url>/movies/index.html</url>
@@ -226,9 +294,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -237,9 +305,9 @@
     
     
     <entry>
-      <title>music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       

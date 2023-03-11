@@ -151,6 +151,12 @@ div#archive {
     font-display: block;
 }
 
+/* loading动画 */
+.loading-img {
+    background: url(../assets/lune_cache.jpg) no-repeat center center;
+    background-size: cover;
+}
+
 /* 文章页H1-H6图标样式效果 */
 /* 控制风车转动速度 4s那里可以自己调节快慢 */
 h1::before,
